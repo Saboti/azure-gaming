@@ -115,7 +115,7 @@ function Install-VirtualAudio {
     Start-Process -FilePath "$PSScriptRoot\$wdk_installer" -ArgumentList "/S" -Wait
 
     $cert = "vb_cert.cer"
-    $url = "https://github.com/ecalder6/azure-gaming/raw/master/$cert"
+    $url = "https://github.com/Saboti/azure-gaming/raw/master/$cert"
 
     Write-Output "Downloading vb certificate from $url"
     $webClient.DownloadFile($url, "$PSScriptRoot\$cert")
@@ -142,7 +142,7 @@ function Disable-IPv6To4 {
 
 function Install-VPN {
     $cert = "zerotier_cert.cer"
-    $url = "https://github.com/ecalder6/azure-gaming/raw/master/$cert"
+    $url = "https://github.com/Saboti/azure-gaming/raw/master/$cert"
 
     Write-Output "Downloading zero tier certificate from $url"
     $webClient.DownloadFile($url, "$PSScriptRoot\$cert")
@@ -178,7 +178,7 @@ function Install-Steam {
 
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
     $script_name = "setup2.ps1"
-    $url = "https://raw.githubusercontent.com/ecalder6/azure-gaming/master/$script_name"
+    $url = "https://raw.githubusercontent.com/Saboti/azure-gaming/master/$script_name"
 
     Write-Output "Downloading second stage setup script from $url"
     $webClient.DownloadFile($url, "C:\$script_name")
@@ -208,7 +208,7 @@ function Add-DisconnectShortcut {
     $WshShell = New-Object -comObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut("C:\disconnect.lnk")
     $Shortcut.TargetPath = "C:\Windows\System32\tscon.exe"
-    $Shortcut.Arguments = "1 /dest:console"
+    $Shortcut.Arguments = "%sessionname% /dest:console"
     $Shortcut.Save()
 }
 
@@ -222,4 +222,16 @@ function Add-AutoLogin ($admin_username, $admin_password) {
     Set-ItemProperty $registry "DefaultDomainName" -Value "$env:computername" -type String
     Set-ItemProperty $registry "DefaultUsername" -Value $admin_username -type String
     Set-ItemProperty $registry "DefaultPassword" -Value $admin_password -type String
+}
+
+function Install-epicgameslauncher {
+    choco install epicgameslauncher -y
+}
+
+function Install-Origin {
+    choco install origin -y
+}
+
+function Install-leagueoflegends {
+    choco install leagueoflegends -y
 }

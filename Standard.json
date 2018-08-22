@@ -44,7 +44,7 @@
             "metadata": {
                 "description": "Location of the setup script."
             },
-            "defaultValue": "https://raw.githubusercontent.com/ecalder6/azure-gaming/master"
+            "defaultValue": "https://raw.githubusercontent.com/Saboti/azure-gaming/master"
         },
         "windowsUpdate": {
             "type": "bool",
@@ -183,9 +183,9 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
+                        "publisher": "MicrosoftWindowsDesktop",
+                        "offer": "Windows-10",
+                        "sku": "rs4-pro",
                         "version": "latest"
                     },
                     "osDisk": {

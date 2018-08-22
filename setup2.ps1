@@ -12,5 +12,8 @@ Disable-Devices
 Enable-Audio
 Install-VirtualAudio
 Install-Steam
+Install-epicgameslauncher
+Install-Origin
+Install-leagueoflegends
 Add-AutoLogin $admin_username $admin_password
 Restart-Computer
