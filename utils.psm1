@@ -55,18 +55,31 @@ function Edit-VisualEffectsRegistry {
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" -Name "VisualFXSetting" -Value 2
 }
 
+#function Install-NvidiaDriver ($manual_install) {
+#    Write-Output "Installing Nvidia Driver"
+#    $driver_file = "nvidia-driver.exe"
+#    $version = "391.03"
+#    $url = "http://us.download.nvidia.com/Windows/Quadro_Certified/$version/$version-quadro-grid-desktop-notebook-win10-64bit-international-whql.exe"
+#
+#    Write-Output "Downloading Nvidia M60 driver from URL $url"
+#    $webClient.DownloadFile($url, "$PSScriptRoot\$driver_file")
+#
+#    Write-Output "Installing Nvidia M60 driver from file $PSScriptRoot\$driver_file"
+#    Start-Process -FilePath "$PSScriptRoot\$driver_file" -ArgumentList "-s", "-noreboot" -Wait
+#    Start-Process -FilePath "C:\NVIDIA\$version\setup.exe" -ArgumentList "-s", "-noreboot" -Wait
+#}
+
 function Install-NvidiaDriver ($manual_install) {
+    # Modified from source: https://github.com/lord-carlos/nvidia-update
     Write-Output "Installing Nvidia Driver"
+    $url = "https://go.microsoft.com/fwlink/?linkid=836843"
     $driver_file = "nvidia-driver.exe"
-    $version = "391.03"
-    $url = "http://us.download.nvidia.com/Windows/Quadro_Certified/$version/$version-quadro-grid-desktop-notebook-win10-64bit-international-whql.exe"
 
     Write-Output "Downloading Nvidia M60 driver from URL $url"
     $webClient.DownloadFile($url, "$PSScriptRoot\$driver_file")
 
     Write-Output "Installing Nvidia M60 driver from file $PSScriptRoot\$driver_file"
     Start-Process -FilePath "$PSScriptRoot\$driver_file" -ArgumentList "-s", "-noreboot" -Wait
-    Start-Process -FilePath "C:\NVIDIA\$version\setup.exe" -ArgumentList "-s", "-noreboot" -Wait
 }
 
 function Disable-Devices {
@@ -230,6 +243,10 @@ function Install-epicgameslauncher {
 
 function Install-Origin {
     choco install origin -y
+}
+
+function Install-swtor {
+    choco install swtor -y
 }
 
 function Install-leagueoflegends {
