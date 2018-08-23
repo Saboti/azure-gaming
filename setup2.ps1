@@ -14,8 +14,6 @@ Install-VirtualAudio
 Install-Steam
 Install-epicgameslauncher
 Install-Origin
-Install-swtor
 Install-leagueoflegends
-Install-Rainway
 Add-AutoLogin $admin_username $admin_password
 Restart-Computer

@@ -55,20 +55,6 @@ function Edit-VisualEffectsRegistry {
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" -Name "VisualFXSetting" -Value 2
 }
 
-#function Install-NvidiaDriver ($manual_install) {
-#    Write-Output "Installing Nvidia Driver"
-#    $driver_file = "nvidia-driver.exe"
-#    $version = "391.03"
-#    $url = "http://us.download.nvidia.com/Windows/Quadro_Certified/$version/$version-quadro-grid-desktop-notebook-win10-64bit-international-whql.exe"
-#
-#    Write-Output "Downloading Nvidia M60 driver from URL $url"
-#    $webClient.DownloadFile($url, "$PSScriptRoot\$driver_file")
-#
-#    Write-Output "Installing Nvidia M60 driver from file $PSScriptRoot\$driver_file"
-#    Start-Process -FilePath "$PSScriptRoot\$driver_file" -ArgumentList "-s", "-noreboot" -Wait
-#    Start-Process -FilePath "C:\NVIDIA\$version\setup.exe" -ArgumentList "-s", "-noreboot" -Wait
-#}
-
 function Install-NvidiaDriver ($manual_install) {
     # Modified from source: https://github.com/lord-carlos/nvidia-update
     Write-Output "Installing Nvidia Driver"
@@ -245,39 +231,6 @@ function Install-Origin {
     choco install origin -y
 }
 
-function Install-swtor {
-    choco install swtor -y
-}
-
 function Install-leagueoflegends {
     choco install leagueoflegends -y
-}
-
-function Download-File($displayName, $description, $url, $output) {
-    Import-Module BitsTransfer
-    Start-BitsTransfer -Source $url -Destination $output -DisplayName $displayName -Description $description
-}
-
-function Install-Rainway {
-    if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        $rainwayRelease = Invoke-WebRequest 'https://releases.rainway.io/Installer_current.json' | ConvertFrom-Json
-        if (!$rainwayRelease) {
-            Write-Host "Failed to fetch remote Rainway config" -ForegroundColor Red
-            return
-        }
-        $version = $rainwayRelease.Version
-        $url = "https://releases.rainway.io/Installer_$version.exe"
-        $downloadedFile = "$PSScriptRoot\RainwayInstaller.exe"
-        $description = "Rainway is a web based game streaming platform that lets you play your favorite PC games anywhere. Learn more at rainway.io"
-        Download-File  -displayName  "Downloading Rainway ($version)" -description $description -url $url -output $downloadedFile
-     
-        Unblock-File -Path $downloadedFile
-        Write-Output "Installing Rainway ($version) from file $downloadedFile"
-        Start-Process -FilePath $downloadedFile -ArgumentList "/qn" -Wait
-        Write-Output "Cleaning up Rainway installation file"
-        Remove-Item -Path $downloadedFile -Confirm:$false
-    }
-    else {
-        Write-Host "You must be running as administrator to install Rainway." -ForegroundColor Red 
-    }
 }
