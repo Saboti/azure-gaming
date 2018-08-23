@@ -15,5 +15,6 @@ Install-Steam
 Install-epicgameslauncher
 Install-Origin
 Install-leagueoflegends
+Download-gameclients
 Add-AutoLogin $admin_username $admin_password
 Restart-Computer

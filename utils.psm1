@@ -175,6 +175,16 @@ function Install-Steam {
     Remove-Item -Path $PSScriptRoot\$steam_exe -Confirm:$false
 }
 
+function Download-gameclients {
+    $battlenet_exe = "Battle.net-Setup.exe"
+    Write-Output "Downloading battle.net into path $PSScriptRoot\$battlenet_exe"
+    $webClient.DownloadFile("https://www.blizzard.com/apps/battle.net/desktop", "$PSScriptRoot\$battlenet_exe")
+
+    $swtor_exe = "SWTOR_setup.exe"
+    Write-Output "Downloading swtor into path $PSScriptRoot\$swtor_exe"
+    $webClient.DownloadFile("https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe", "$PSScriptRoot\$swtor_exe")
+}
+
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
     $script_name = "setup2.ps1"
     $url = "https://raw.githubusercontent.com/Saboti/azure-gaming/master/$script_name"
