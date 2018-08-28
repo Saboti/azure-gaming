@@ -188,9 +188,12 @@ function Download-gameclients {
     Write-Output "Downloading swtor into path $PSScriptRoot\$swtor_exe"
     $webClient.DownloadFile("https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe", "$PSScriptRoot\$swtor_exe")
 
-    $bnetlauncher_zip = "bnetlauncher_v122.zip"
-    Write-Output "Downloading bnetlauncher into path $PSScriptRoot\$bnetlauncher_zip"
-    $webClient.DownloadFile("https://madalien.com/pub/bnetlauncher/bnetlauncher_v122.zip", "$PSScriptRoot\$bnetlauncher_zip")
+    $compressed_file = "bnetlauncher_v122.zip"
+    $extract_folder = "bnetlauncher"
+    Write-Output "Downloading bnetlauncher into path $PSScriptRoot\$compressed_file"
+    $webClient.DownloadFile("https://madalien.com/pub/bnetlauncher/bnetlauncher_v122.zip", "$PSScriptRoot\$compressed_file")
+    Write-Output "Extracting  bnetlauncher"
+    Expand-Archive "$PSScriptRoot\$compressed_file" -DestinationPath "$PSScriptRoot\$extract_folder" -Force
 }
 
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
