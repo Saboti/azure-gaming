@@ -83,6 +83,10 @@ function Disable-Devices {
     Write-Output "Disabling Hyper-V Video"
     Import-Module "$PSScriptRoot\$extract_folder\DeviceManagement.psd1"
     Get-Device | Where-Object -Property Name -Like "Microsoft Hyper-V Video" | Disable-Device -Confirm:$false
+
+    Write-Output "Disabling Generic Non-PnP Monitor"
+    Import-Module "$PSScriptRoot\$extract_folder\DeviceManagement.psd1"
+    Get-Device | Where-Object -Property Name -Like "Generic Non-PnP Monitor" | Disable-Device -Confirm:$false
 }
 
 function Enable-Audio {
@@ -183,6 +187,8 @@ function Download-gameclients {
     $swtor_exe = "SWTOR_setup.exe"
     Write-Output "Downloading swtor into path $PSScriptRoot\$swtor_exe"
     $webClient.DownloadFile("https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe", "$PSScriptRoot\$swtor_exe")
+
+    $webClient.DownloadFile("https://madalien.com/pub/bnetlauncher/bnetlauncher_v122.zip", "$PSScriptRoot\bnetlauncher_v122.zip")
 }
 
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
