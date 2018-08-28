@@ -182,13 +182,15 @@ function Install-Steam {
 function Download-gameclients {
     $battlenet_exe = "Battle.net-Setup.exe"
     Write-Output "Downloading battle.net into path $PSScriptRoot\$battlenet_exe"
-    $webClient.DownloadFile("https://www.blizzard.com/apps/battle.net/desktop", "$PSScriptRoot\$battlenet_exe")
+    $webClient.DownloadFile("https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP&id=290573456.1505264452", "$PSScriptRoot\$battlenet_exe")
 
     $swtor_exe = "SWTOR_setup.exe"
     Write-Output "Downloading swtor into path $PSScriptRoot\$swtor_exe"
     $webClient.DownloadFile("https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe", "$PSScriptRoot\$swtor_exe")
 
-    $webClient.DownloadFile("https://madalien.com/pub/bnetlauncher/bnetlauncher_v122.zip", "$PSScriptRoot\bnetlauncher_v122.zip")
+    $bnetlauncher_zip = "bnetlauncher_v122.zip"
+    Write-Output "Downloading bnetlauncher into path $PSScriptRoot\$bnetlauncher_zip"
+    $webClient.DownloadFile("https://madalien.com/pub/bnetlauncher/bnetlauncher_v122.zip", "$PSScriptRoot\$bnetlauncher_zip")
 }
 
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
