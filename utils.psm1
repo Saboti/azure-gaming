@@ -180,16 +180,14 @@ function Download-gameclients {
     Write-Output "Downloading battle.net into path $PSScriptRoot\$battlenet_exe"
     $webClient.DownloadFile("https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP&id=290573456.1505264452", "$PSScriptRoot\$battlenet_exe")
 
-    $swtor_exe = "SWTOR_setup.exe"
-    Write-Output "Downloading swtor into path $PSScriptRoot\$swtor_exe"
-    $webClient.DownloadFile("https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe", "$PSScriptRoot\$swtor_exe")
-
     $compressed_file = "bnetlauncher_v122.zip"
     $extract_folder = "bnetlauncher"
     Write-Output "Downloading bnetlauncher into path $PSScriptRoot\$compressed_file"
     $webClient.DownloadFile("https://madalien.com/pub/bnetlauncher/bnetlauncher_v122.zip", "$PSScriptRoot\$compressed_file")
     Write-Output "Extracting  bnetlauncher"
     Expand-Archive "$PSScriptRoot\$compressed_file" -DestinationPath "$PSScriptRoot\$extract_folder" -Force
+    Write-Output "Cleaning up bnetlauncher compressed file"
+    Remove-Item -Path $PSScriptRoot\$compressed_file -Confirm:$false
 }
 
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
@@ -244,10 +242,10 @@ function Install-epicgameslauncher {
     choco install epicgameslauncher -y
 }
 
-function Install-Origin {
-    choco install origin -y
-}
-
 function Install-leagueoflegends {
     choco install leagueoflegends -y
+}
+
+function Install-swtor {
+    choco install swtor -y
 }

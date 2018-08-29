@@ -13,7 +13,7 @@ Enable-Audio
 Install-VirtualAudio
 Install-Steam
 Install-epicgameslauncher
-Install-Origin
+Install-swtor
 Install-leagueoflegends
 Download-gameclients
 Add-AutoLogin $admin_username $admin_password
