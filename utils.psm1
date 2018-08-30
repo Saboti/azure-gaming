@@ -180,6 +180,10 @@ function Download-gameclients {
     Write-Output "Downloading battle.net into path $PSScriptRoot\$battlenet_exe"
     $webClient.DownloadFile("https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP&id=290573456.1505264452", "$PSScriptRoot\$battlenet_exe")
 
+    $swtor_exe = "SWTOR_setup.exe"
+    Write-Output "Downloading swtor into path $PSScriptRoot\$swtor_exe"
+    $webClient.DownloadFile("https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe", "$PSScriptRoot\$swtor_exe")
+
     $compressed_file = "bnetlauncher_v122.zip"
     $extract_folder = "bnetlauncher"
     Write-Output "Downloading bnetlauncher into path $PSScriptRoot\$compressed_file"
@@ -244,8 +248,4 @@ function Install-epicgameslauncher {
 
 function Install-leagueoflegends {
     choco install leagueoflegends -y
-}
-
-function Install-swtor {
-    choco install swtor -y
 }
