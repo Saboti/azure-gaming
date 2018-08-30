@@ -207,3 +207,11 @@ Contributions are welcome! Please submit an issue and a PR for your change.
 * My question is not listed
 
     Submit an issue on GitHub.
+
+# Google Cloud
+
+It's possible to use the setup.ps1 script on the Google Cloud VM too.
+
+Just follow the "I Want to Manually Deploy My VM" Part.
+
+Good Tutorial for Initial Setup of the Google Cloud VM: https://www.reddit.com/r/cloudygamer/comments/8pvbyp/tutorial_set_up_a_google_cloud_gamming_machine/
