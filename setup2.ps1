@@ -12,8 +12,8 @@ Disable-Devices
 Enable-Audio
 Install-VirtualAudio
 Install-Steam
+Install-Rainway
 Install-epicgameslauncher
-Install-swtor
 Install-leagueoflegends
 Download-gameclients
 Add-AutoLogin $admin_username $admin_password

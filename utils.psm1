@@ -194,6 +194,20 @@ function Download-gameclients {
     Remove-Item -Path $PSScriptRoot\$compressed_file -Confirm:$false
 }
 
+function Install-Rainway {
+    $rainwayRelease = Invoke-WebRequest 'https://releases.rainway.io/Installer_current.json' | ConvertFrom-Json
+    $version = $rainwayRelease.Version
+    $url = "https://releases.rainway.io/Installer_$version.exe"
+    $rainway_exe = "Installer_$version.exe"
+    Write-Output "Downloading Rainway into path $PSScriptRoot\$rainway_exe"
+    $webClient.DownloadFile("$url", "$PSScriptRoot\$rainway_exe")
+    Write-Output "Installing rainway"
+    Start-Process -FilePath "$PSScriptRoot\$rainway_exe" -ArgumentList "/qn" -Wait
+
+    Write-Output "Cleaning up rainway installation file"
+    Remove-Item -Path $PSScriptRoot\$rainway_exe -Confirm:$false
+}
+
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
     $script_name = "setup2.ps1"
     $url = "https://raw.githubusercontent.com/Saboti/azure-gaming/master/$script_name"
