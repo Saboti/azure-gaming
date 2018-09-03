@@ -195,6 +195,15 @@ function Download-gameclients {
 }
 
 function Install-Rainway {
+    $dotnet_exe = "NDP471-KB4033342-x86-x64-AllOS-ENU.exe"
+    Write-Output "Downloading Microsoft .NET Framework 4.7.1 into path $PSScriptRoot\$dotnet_exe"
+    $webClient.DownloadFile("https://download.microsoft.com/download/9/E/6/9E63300C-0941-4B45-A0EC-0008F96DD480/NDP471-KB4033342-x86-x64-AllOS-ENU.exe", "$PSScriptRoot\$dotnet_exe")
+    Write-Output "Installing Microsoft .NET Framework 4.7.1"
+    Start-Process -FilePath "$PSScriptRoot\$dotnet_exe" -ArgumentList "/q /norestart" -Wait
+
+    Write-Output "Cleaning up Microsoft .NET Framework 4.7.1 installation file"
+    Remove-Item -Path $PSScriptRoot\$dotnet_exe -Confirm:$false
+
     $rainwayRelease = Invoke-WebRequest 'https://releases.rainway.io/Installer_current.json' | ConvertFrom-Json
     $version = $rainwayRelease.Version
     $url = "https://releases.rainway.io/Installer_$version.exe"
