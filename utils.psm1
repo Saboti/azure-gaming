@@ -272,3 +272,10 @@ function Install-epicgameslauncher {
 function Install-leagueoflegends {
     choco install leagueoflegends -y
 }
+
+function Enable-H264 {
+    Write-Output "Enable H.264 Graphics mode for Remote Desktop."
+    Set-ItemProperty -Path HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services -Name AVCHardwareEncodePreferred -Value 2
+    Set-ItemProperty -Path HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services -Name AVC444ModePreferred -Value 1
+}
+
