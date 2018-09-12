@@ -12,7 +12,7 @@ Disable-Devices
 Enable-Audio
 Install-VirtualAudio
 Install-Steam
-Install-Rainway
+Download-Rainway
 Install-epicgameslauncher
 Install-leagueoflegends
 Download-gameclients
