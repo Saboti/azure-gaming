@@ -9,10 +9,11 @@ Import-Module "C:\$script_name"
 
 Disable-ScheduleWorkflow
 Disable-Devices
+Disable-TCC
 Enable-Audio
 Install-VirtualAudio
 Install-Steam
-Download-Rainway
+Install-Rainway
 Install-epicgameslauncher
 Install-leagueoflegends
 Download-gameclients

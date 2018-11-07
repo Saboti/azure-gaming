@@ -1,5 +1,6 @@
 [Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 $webClient = new-object System.Net.WebClient
+$webClient.Headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0';
 
 function Disable-InternetExplorerESC {
     # From https://stackoverflow.com/questions/9368305/disable-ie-security-on-windows-server-via-powershell
@@ -83,6 +84,12 @@ function Disable-Devices {
     Write-Output "Disabling Hyper-V Video"
     Import-Module "$PSScriptRoot\$extract_folder\DeviceManagement.psd1"
     Get-Device | Where-Object -Property Name -Like "Microsoft Hyper-V Video" | Disable-Device -Confirm:$false
+}
+
+function Disable-TCC {
+    $nvsmi = "C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi.exe"
+    $gpu = & $nvsmi --format=csv,noheader --query-gpu=pci.bus_id
+    & $nvsmi -g $gpu -fdm 0
 }
 
 function Enable-Audio {
@@ -188,19 +195,39 @@ function Download-gameclients {
     $extract_folder = "bnetlauncher"
     Write-Output "Downloading bnetlauncher into path $PSScriptRoot\$compressed_file"
     $webClient.DownloadFile("https://madalien.com/pub/bnetlauncher/bnetlauncher_v122.zip", "$PSScriptRoot\$compressed_file")
-    Write-Output "Extracting  bnetlauncher"
+    Write-Output "Extracting bnetlauncher"
     Expand-Archive "$PSScriptRoot\$compressed_file" -DestinationPath "$PSScriptRoot\$extract_folder" -Force
     Write-Output "Cleaning up bnetlauncher compressed file"
     Remove-Item -Path $PSScriptRoot\$compressed_file -Confirm:$false
+
+    $compressed_file2 = "OriginSteamOverlayLauncher-v1.07d.zip"
+    $extract_folder2 = "originsteamoverlaylauncher"
+    Write-Output "Downloading originsteamoverlaylauncher into path $PSScriptRoot\$compressed_file2"
+    $webClient.DownloadFile("https://github.com/WombatFromHell/OriginSteamOverlayLauncher/releases/download/v1.07d/OriginSteamOverlayLauncher-v1.07d.zip", "$PSScriptRoot\$compressed_file2")
+    Write-Output "Extracting originsteamoverlaylauncher"
+    Expand-Archive "$PSScriptRoot\$compressed_file2" -DestinationPath "$PSScriptRoot\$extract_folder2" -Force
+    Write-Output "Cleaning up originsteamoverlaylauncher compressed file"
+    Remove-Item -Path $PSScriptRoot\$compressed_file2 -Confirm:$false
 }
 
-function Download-Rainway {
+function Install-Rainway {
+    choco install dotnet4.7.1 --force
+    choco install msvisualcplusplus2013-redist --force
+    choco install vcredist140 --force
     $rainwayRelease = Invoke-WebRequest 'https://releases.rainway.io/Installer_current.json' | ConvertFrom-Json
+    if (!$rainwayRelease) {
+        Write-Output "Failed to fetch remote Rainway config" -ForegroundColor Red
+        return
+    }
     $version = $rainwayRelease.Version
     $url = "https://releases.rainway.io/Installer_$version.exe"
-    $rainway_exe = "Installer_$version.exe"
-    Write-Output "Downloading Rainway into path $PSScriptRoot\$rainway_exe"
-    $webClient.DownloadFile("$url", "$PSScriptRoot\$rainway_exe")
+    $downloadedFile = "$PSScriptRoot\RainwayInstaller.exe"
+    $webClient.DownloadFile($url, $downloadedFile)
+    Unblock-File -Path $downloadedFile
+    Write-Output "Installing Rainway ($version) from file $downloadedFile"
+    Start-Process -FilePath $downloadedFile -ArgumentList "/qn" -Wait
+    Write-Output "Cleaning up Rainway installation file"
+    Remove-Item -Path $downloadedFile -Confirm:$false
 }
 
 function Set-ScheduleWorkflow ($admin_username, $admin_password, $manual_install) {
