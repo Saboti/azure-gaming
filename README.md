@@ -24,8 +24,7 @@ The calculators below are prepopulated with an estimated monthly price for playi
 
 Azure also charges you for the number of transactions on managed disk. The calculator assumes 100k transactions a month (no idea how accurate this is).
 
-* [Price Calculator for Standard](https://azure.com/e/5479babbd37e46b68730b27e9fd1a641)
-* [Price Calculator for Low Priority](https://azure.com/e/f0e1298bc0984f178ba002d3316d9974)
+* [Price Calculator for Low Priority](https://azure.com/e/f059af1240914a73a61a7efede385580)
 
 | Type          | Bandwidth (Mbits/sec) | Monthly Data (GBs) | Monthly Price* | Hourly Price* |
 | ------------- | --------------------: | -----------------: | -------------: | ------------: |
