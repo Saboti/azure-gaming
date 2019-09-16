@@ -136,7 +136,7 @@
                 "[variables('virtualNetworkName')]"
             ],
             "sku": {
-                "name": "Standard_NC6",
+                "name": "Standard_NV6",
                 "capacity": "1"
             },
             "properties": {
